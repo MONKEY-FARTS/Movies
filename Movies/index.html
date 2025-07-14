@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="website icon" type="png" href="./download-removebg-preview (1).png">
+    <title>Movies</title>
+    <style>
+        header {
+            width: 100%;
+            color: white;
+            background-color: #2c2f35;
+            padding: 2em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        /*Panchang style*/
+
+        @font-face {
+            font-family: 'Panchang-Extralight';
+            src: url('./Panchang_Complete/Fonts/OTF/Panchang-Extralight.otf') format('opentype');
+            font-weight: 200;
+            font-display: swap;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Panchang-Light';
+            src: url('./Panchang_Complete/Fonts/OTF/Panchang-Light.otf') format('opentype');
+            font-weight: 300;
+            font-display: swap;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Panchang-Regular';
+            src: url('./Panchang_Complete/Fonts/OTF/Panchang-Regular.otf') format('opentype');
+            font-weight: 400;
+            font-display: swap;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Panchang-Medium';
+            src: url('./Panchang_Complete/Fonts/OTF/Panchang-Medium.otf') format('opentype');
+            font-weight: 500;
+            font-display: swap;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Panchang-Semibold';
+            src: url('./Panchang_Complete/Fonts/OTF/Panchang-Semibold.otf') format('opentype');
+            font-weight: 600;
+            font-display: swap;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Panchang-Bold';
+            src: url('./Panchang_Complete/Fonts/OTF/Panchang-Bold.otf') format('opentype');
+            font-weight: 700;
+            font-display: swap;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'Panchang-Extrabold';
+            src: url('./Panchang_Complete/Fonts/OTF/Panchang-Extrabold.otf') format('opentype');
+            font-weight: 800;
+            font-display: swap;
+            font-style: normal;
+        }
+
+        body {
+            margin: 0;
+            padding-top: 120px;
+            background-color: #e2d7d0;
+        }
+
+        #movies {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Panchang-Bold';
+            cursor: default;
+        }
+
+        i {
+            font-size: 2em;
+            cursor: pointer;
+        }
+
+        .general {
+            position: relative;
+            border-radius: 20px;
+            height: 20em;
+            width: 17em;
+            perspective: 800px;
+            background-color: transparent;
+        }
+
+        .contenido {
+            width: 100%;
+            height: 100%;
+            border-radius: 20px;
+            background-color: #3D4D55;
+            position: relative;
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+
+        .imagen,
+        .descripcion {
+            position: absolute;
+            border-radius: 10px;
+            backface-visibility: hidden;
+            overflow: hidden;
+            box-shadow: 0 4px 8 px rgba(0, 0, 0, 0.2)
+        }
+
+        .imagen {
+            border-radius: 10px;
+            height: calc(100% - 2em);
+            width: calc(100% - 2em);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            position: absolute;
+            top: 1em;
+            left: 1em;
+            z-index: 2;
+        }
+
+        .descripcion {
+            border-radius: 10px;
+            height: 18em;
+            width: 15em;
+            background-color: #c5b9b3;
+            position: absolute;
+            top: 1em;
+            left: 1em;
+            transform: rotateY(180deg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .descripcion p {
+            background-color: #2c2f35;
+            color: #d0d0d0;
+            font-family: Arial, sans-serif;
+            position: absolute;
+            left: 1em;
+            right: 1em;
+        }
+
+        .general:hover .contenido {
+            transform: rotateY(180deg);
+        }
+
+        #imbd {
+            font-family: 'Panchang-Semibold';
+            position: relative;
+            left: 1em;
+        }
+
+        #imbdcard {
+            position: relative;
+        }
+
+        #lista-peliculas {
+            max-width: 1100px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7em;
+            padding: 0 0em;
+            justify-content: center;
+            position: absolute;
+            left: 10em;
+        }
+
+        #lista-peliculas {
+            list-style: none;
+            counter-reset: numero;
+            font-family: fantasy;
+        }
+
+        #lista-peliculas li {
+            counter-increment: numero;
+            position: relative;
+            width: 17em;
+        }
+
+        #lista-peliculas li::before {
+            font-size: 2em;
+            content: counter(numero) ". ";
+            font-family: 'Panchang-Medium';
+            position: absolute;
+            left: -3em;
+            top: 4em;
+            color: #2c2f35;
+        }
+
+
+        #imagen1 {
+            background-image: url(./Image/cadenaperpétua.png);
+        }
+
+        #imagen2 {
+            background-image: url(./Image/elpadrinoposter.jpg);
+        }
+
+        #imagen3 {
+            background-image: url(./Image/El_caballero_oscuro-poster.jpg);
+        }
+
+        #imagen4 {
+            background-image: url(./Image/el-padrino-II-poster.jpeg);
+        }
+
+        #imagen5 {
+            background-image: url(./Image/12-hombres-sin-piedad-poster.jpg);
+        }
+
+        #imagen6 {
+            background-image: url(./Image/El_senyors_del_anells3_Poster.jpg);
+        }
+
+        #imagen7 {
+            background-image: url(./Image/la-lista-de-schlinder-poster.jpg);
+        }
+
+        #imagen8 {
+            background-image: url(./Image/pulp-fiction--poster.jpg);
+        }
+
+        #imagen9 {
+            background-image: url(./Image/el-señor-de-los-anillos-la-comunidad-del-anillo-poster.jpg);
+        }
+
+        #imagen10 {
+            background-image: url(./Image/el-bueno-el-feo-y-el-malo-poster.webp);
+        }
+
+        #imagen11 {
+            background-image: url(./Image/forrest-gump-poster.jpg);
+        }
+
+        #imagen12 {
+            background-image: url(./Image/el-señor-de-los-anillos-las-dos-torres-poster.jpg);
+        }
+
+        #imagen13 {
+            background-image: url(./Image/figth-club-poster.jpg);
+        }
+
+        #imagen14 {
+            background-image: url(./Image/poster_origen.png);
+        }
+
+        #imagen15 {
+            background-image: url(./Image/el-imperio-contraataca-poster.png);
+        }
+
+        #imagen16 {
+            background-image: url(./Image/mareix-poster.jpeg);
+        }
+
+        #imagen17 {
+            background-image: url(./Image/uno_de_los_nuestros_poster.png);
+        }
+
+        #imagen18 {
+            background-image: url(./Image/interestellar-poster.jpg);
+        }
+
+        #imagen19 {
+            background-image: url(./Image/alguien-voló-sobre-el-nido-del-cuco-poster.jpg);
+        }
+
+        #imagen20 {
+            background-image: url(./Image/seven-poster.jpg);
+        }
+
+        .title {
+            font-family: 'Panchang-Medium';
+            font-size: 1em;
+            position: absolute;
+            top: 0em;
+        }
+
+        .informacion {
+            font-family: 'Panchang-Light';
+            list-style: outside;
+            position: absolute;
+            top: 3em;
+            left: 0.8em;
+        }
+
+        .informacion li {
+            margin-bottom: 0.75em;
+            font-size: 1em;
+        }
+
+        #puntuacion {
+            font-family: 'Panchang-Light';
+            background-color: transparent;
+            color: black;
+            position: relative;
+            left: 2.5em;
+            top: 2.25em;
+            font-size: 1em;
+        }
+
+        .star {
+            color: yellow;
+            position: relative;
+            left: 1em;
+            top: 1em;
+        }
+
+        .generallogo {
+            position: relative;
+            width: 20em;
+            height: 5em;
+            margin: 2em auto;
+            left: -0.5em;
+        }
+
+        .logo {
+            position: absolute;
+            height: 3em;
+            width: 3em;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            top: 8em;
+            transform: translateY(-50%);
+        }
+
+        .logo img {
+            height: 100%;
+            width: 100%;
+            object-fit: contain;
+            display: block;
+            border-radius: 50%;
+        }
+
+        .logo:hover {
+            transform: translateY(-50%) scale(1.4);
+            z-index: 10;
+        }
+
+        .tooltip {
+            font-family: 'Panchang-Light';
+            position: absolute;
+            bottom: 110%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #e2d7d0;
+            color: #000;
+            padding: 5px 8px;
+            border-radius: 10px;
+            font-size: 0.5em;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+            z-index: 20;
+        }
+
+        .logo:hover .tooltip {
+            opacity: 1;
+        }
+
+        #movistarplus {
+            left: 70%;
+        }
+
+        #netflix {
+            left: 55%;
+        }
+
+        #amazonprime {
+            left: 40%;
+        }
+
+        #youtube {
+            left: 25%;
+        }
+
+        #googlepeliculas {
+            left: 10%;
+        }
+
+        #appletv {
+            left: -5%;
+        }
+
+        #rakutentv {
+            left: -20%;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <i class="fa-solid fa-bars"></i>
+        <h1 id="movies">Peiculas</h1>
+    </header>
+    <div class="imbd">
+        <h1 id="imbd">IMBd</h1>
+        <div id="imbdcard">
+            <ol id="lista-peliculas">
+                <li>
+                    <div class="general">
+                        <div class="contenido">
+                            <div class="imagen" id="imagen1"></div>
+                            <div class="descripcion" id="descripcion1">
+                                <h2 class="title">Cadena Perpetua</h2>
+                                <ul class="informacion">
+                                    <li>1994</li>
+                                    <li>2h 22min</li>
+                                    <li>13</li>
+                                </ul>
+                                <i class="fa-solid fa-star star"></i>
+                                <p id="puntuacion">9,3</p>
+                                <div class="generallogo">
+                                    <div class="logo" id="movistarplus">
+                                        <img src="./Image-Logos/movistar+.png" alt="Movistar+" />
+                                        <div class="tooltip">Movistar+: Subscripción</div>
+                                    </div>
+                                    <div class="logo" id="netflix">
+                                        <img src="./Image-Logos/netflix.png" alt="Netflix" />
+                                        <div class="tooltip">Netflix: Suscripción</div>
+                                    </div>
+                                    <div class="logo" id="amazonprime">
+                                        <img src="./Image-Logos/amazonprimevideo.png" alt="Amazon Prime" />
+                                        <div class="tooltip">Amazon Prime: 2,99€ alquiler</div>
+                                    </div>
+                                    <div class="logo" id="youtube">
+                                        <img src="./Image-Logos/youtube.png" alt="YouTube" />
+                                        <div class="tooltip">YouTube: 3,99€ alquiler</div>
+                                    </div>
+                                    <div class="logo" id="googlepeliculas">
+                                        <img src="./Image-Logos/googleplaypeliculas.png" alt="Google Play" />
+                                        <div class="tooltip">Google Play: 3,99€ alquiler</div>
+                                    </div>
+                                    <div class="logo" id="appletv">
+                                        <img src="./Image-Logos/appletv.png" alt="Apple TV" />
+                                        <div class="tooltip">Apple TV: 4,99€ compra</div>
+                                    </div>
+                                    <div class="logo" id="rakutentv">
+                                        <img src="./Image-Logos/rakutentv.png" alt="Rakuten TV" />
+                                        <div class="tooltip">Rakuten TV: 3,99€ alquiler</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+ 
+            </ol>
+        </div>
+    </div>
+    <div id="rotten-tomatoes">
+    </div>
+    <div id="empire">
+    </div>
+</body>
+
+</html>

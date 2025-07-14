@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Logos con Tooltip Central Arriba</title>
+  <style>
+    body {
+      background-color: #c5b9b3;
+      font-family: Arial, sans-serif;
+    }
+
+    .general {
+      position: relative;
+      width: 25em;
+      height: 8em;
+      margin: 3em auto;
+    }
+
+    .logo {
+      position: absolute;
+      height: 3em;
+      width: 3em;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .logo img {
+      height: 100%;
+      width: 100%;
+      object-fit: contain;
+      display: block;
+      border-radius: 50%;
+    }
+
+    .logo:hover {
+      transform: translateY(-50%) scale(1.4);
+      z-index: 10;
+    }
+
+    #tooltip-central {
+      position: absolute;
+      bottom: 80%;
+      left: 40%;
+      transform: translateX(-50%);
+      background-color: #e2d7d0;
+      color: #000;
+      padding: 8px 12px;
+      border-radius: 10px;
+      font-size: 0.8em;
+      opacity: 0;
+      transition: opacity 0.2s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 20;
+    }
+
+    #movistarplus {
+      left: 56%;
+    }
+
+    #netflix {
+      left: 48%;
+    }
+
+    #amazonprime {
+      left: 40%;
+    }
+
+    #youtube {
+      left: 32%;
+    }
+
+    #googlepeliculas {
+      left: 24%;
+    }
+
+    #appletv {
+      left: 16%;
+    }
+
+    #rakutentv {
+      left: 8%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="general">
+    <!-- Tooltip central arriba -->
+    <div id="tooltip-central"></div>
+
+    <!-- Logos -->
+    <div class="logo" id="movistarplus" onmouseover="showTooltip('Movistar+: Suscripción')" onmouseout="hideTooltip()">
+      <img src="./Image-Logos/movistar+.png" alt="Movistar+" />
+    </div>
+    <div class="logo" id="netflix" onmouseover="showTooltip('Netflix: Suscripción')" onmouseout="hideTooltip()">
+      <img src="./Image-Logos/netflix.png" alt="Netflix" />
+    </div>
+    <div class="logo" id="amazonprime" onmouseover="showTooltip('Amazon Prime: 2,99€ alquiler')"
+      onmouseout="hideTooltip()">
+      <img src="./Image-Logos/amazonprimevideo.png" alt="Amazon Prime" />
+    </div>
+    <div class="logo" id="youtube" onmouseover="showTooltip('YouTube: 3,99€ alquiler')" onmouseout="hideTooltip()">
+      <img src="./Image-Logos/youtube.png" alt="YouTube" />
+    </div>
+    <div class="logo" id="googlepeliculas" onmouseover="showTooltip('Google Play: 3,99€ alquiler')"
+      onmouseout="hideTooltip()">
+      <img src="./Image-Logos/googleplaypeliculas.png" alt="Google Play" />
+    </div>
+    <div class="logo" id="appletv" onmouseover="showTooltip('Apple TV: 4,99€ compra')" onmouseout="hideTooltip()">
+      <img src="./Image-Logos/appletv.png" alt="Apple TV" />
+    </div>
+    <div class="logo" id="rakutentv" onmouseover="showTooltip('Rakuten TV: 3,99€ alquiler')" onmouseout="hideTooltip()">
+      <img src="./Image-Logos/rakutentv.png" alt="Rakuten TV" />
+    </div>
+  </div>
+
+  <script>
+    const tooltip = document.getElementById('tooltip-central');
+
+    function showTooltip(text) {
+      tooltip.textContent = text;
+      tooltip.style.opacity = 1;
+    }
+
+    function hideTooltip() {
+      tooltip.style.opacity = 0;
+    }
+  </script>
+</body>
+
+</html>
